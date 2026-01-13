@@ -1,7 +1,21 @@
 {
+  "name": "crud-express",
+  "version": "1.0.1",
+  "description": "CRUD Express",
+  "author": "Rahmat Muttaqin",
+  "main": "index.ts",
+  "private": true,
+  "scripts": {
+    "build": "tsc && tsup",
+    "dev": "node --import=tsx --watch src/index.ts",
+    "start": "node dist/index.js"
+  },
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "@types/node": "^25.0.7"
+    "@types/node": "^25.0.7",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
