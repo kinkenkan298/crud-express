@@ -40,9 +40,8 @@ export class MahasiswaController {
     }
 
     if (email) {
-      const existingEmail = await MahasiswaModel.getAll();
-      const emailExists = existingEmail.find(m => m.email === email);
-      if (emailExists) {
+      const existingEmail = await MahasiswaModel.getByEmail(email);
+      if (existingEmail) {
         throw new HttpException(400, "Email sudah digunakan");
       }
     }
@@ -56,6 +55,10 @@ export class MahasiswaController {
     const { id } = req.params;
     const { nim, nama, jurusan, email } = req.body;
 
+    if (typeof id !== "string") {
+      throw new HttpException(400, "ID harus berupa string");
+    }
+
     const existing = await MahasiswaModel.getById(id);
     if (!existing) {
       throw new HttpException(404, "Mahasiswa tidak ditemukan");
@@ -68,8 +71,11 @@ export class MahasiswaController {
       }
     }
 
-    if (typeof id !== "string") {
-      throw new HttpException(400, "ID harus berupa string");
+    if (email && email !== existing.email) {
+      const existingEmail = await MahasiswaModel.getByEmail(email);
+      if (existingEmail) {
+        throw new HttpException(400, "Email sudah digunakan");
+      }
     }
 
     const mahasiswa = await MahasiswaModel.update(id, { nim, nama, jurusan, email });
