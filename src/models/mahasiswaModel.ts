@@ -35,6 +35,12 @@ export class MahasiswaModel {
     });
   }
 
+  static async getByEmail(email: string): Promise<Mahasiswa | null> {
+    return db.mahasiswa.findUnique({
+      where: { email },
+    });
+  }
+
   static async create(data: CreateMahasiswaDto): Promise<Mahasiswa> {
     return db.mahasiswa.create({
       data,
